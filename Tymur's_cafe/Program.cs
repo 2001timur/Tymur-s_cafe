@@ -192,6 +192,56 @@ namespace Tymur_s_cafe
 
 
         }
+
+        static void СalculateBill()
+        {
+            netTotal = 0;
+            totalAmount = 0;
+
+            for (int i = 0; i < descriptions.Count; i++)
+            {
+                netTotal += prices[i];
+            }
+
+            totalGST = netTotal * GST / 100;
+            totalAmount = netTotal + totalGST + tipAmount;
+        }
+
+        static void DisplayBillMenu()
+        {
+            if (descriptions.Count == 0)
+            {
+                Console.WriteLine("There are no items in the bill to display.\n");
+                return;
+            }
+
+            Console.WriteLine($"{"\nDescription",-20}  {"Price",10}");
+            Console.Write(new string('-', 20));
+            Console.Write("  ");
+            Console.Write(new string('-', 10));
+            Console.Write('\n');
+
+            СalculateBill();
+
+            for (int i = 0; i < descriptions.Count; i++)
+            {
+                Console.WriteLine($"{descriptions[i],-20}  {"$" + prices[i].ToString("f2"),10}");
+            }
+
+            Console.Write(new string('-', 20));
+            Console.Write("  ");
+            Console.Write(new string('-', 10));
+            Console.Write('\n');
+
+            Console.WriteLine($"{"Net Total",20}  {"$" + netTotal.ToString("f2"),10}");
+            Console.WriteLine($"{"Tip Amount",20}  {"$" + tipAmount.ToString("f2"),10}");
+            Console.WriteLine($"{"Total GST",20}  {"$" + totalGST.ToString("f2"),10}");
+            Console.WriteLine($"{"Total Amount",20}  {"$" + totalAmount.ToString("f2"),10}\n");
+
+        }
+
+
+
         static void Main(string[] args)
         {
             
