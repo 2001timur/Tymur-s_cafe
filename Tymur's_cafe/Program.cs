@@ -292,6 +292,55 @@ namespace Tymur_s_cafe
             Console.WriteLine($"Write to file {fileName} was successful.\n");
         }
 
+        static void LoadFromFile(string fileName)
+        {
+            descriptions.Clear();
+            prices.Clear();
+
+            string[] allLines = File.ReadAllLines(fileName);
+
+            foreach (string line in allLines)
+            {
+                string[] parts = line.Split('/');
+
+                descriptions.Add(parts[0]);
+                prices.Add(decimal.Parse(parts[1]));
+            }
+
+        }
+
+        static void LoadFromFileMenu()
+        {
+
+            string fileName, fileNameTrim;
+            bool res;
+
+            do
+            {
+                Console.Write("\nEnter the file path to load items from: ");
+                fileName = Console.ReadLine();
+                fileNameTrim = Path.GetFileNameWithoutExtension(fileName);
+                if (string.IsNullOrEmpty(fileName) || fileNameTrim.Length < 1 || fileNameTrim.Length > 10)
+                    Console.WriteLine("Incorrect file name: [1-10] symbols!");
+            } while (string.IsNullOrEmpty(fileName) || fileNameTrim.Length < 1 || fileNameTrim.Length > 10);
+
+            try
+            {
+                LoadFromFile(fileName);
+            }
+            catch (FileNotFoundException ex)
+            {
+                Console.WriteLine("\nFile not found.\n");
+                return;
+            }
+
+            Console.WriteLine($"Read from {fileName} was successful.\n");
+
+            tipAmount = 0;
+
+        }
+
+
         static void Main(string[] args)
         {
             
