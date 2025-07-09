@@ -75,6 +75,70 @@ namespace Tymur_s_cafe
 
         }
 
+        static void AddTipMenu()
+        {
+
+            if (descriptions.Count == 0)
+            {
+                Console.WriteLine("There are no items in the bill to add tip for.\n");
+                return;
+            }
+
+            СalculateBill();
+
+            Console.WriteLine($"\nNet Total: ${netTotal}");
+
+            Console.WriteLine("\n1 - Tip Percentage");
+            Console.WriteLine("2 - Tip Amount");
+            Console.WriteLine("3 - No Tip\n");
+
+            int choice;
+            bool res;
+            int percentage = 0;
+            do
+            {
+                Console.Write("Enter Tip Method: ");
+                res = int.TryParse(Console.ReadLine(), out choice);
+                if (!res || choice < 1 || choice > 3) Console.WriteLine("Incorrect choice. Try again.\n");
+
+            } while (!res || choice < 1 || choice > 3);
+
+            Console.WriteLine();
+
+            switch (choice)
+            {
+                case 1:
+                    do
+                    {
+                        Console.Write("Enter tip percentage: ");
+                        res = int.TryParse(Console.ReadLine(), out percentage);
+                        if (!res || percentage < 1 || percentage > 100) Console.WriteLine("Incorrect tip percentage. Try again.\n");
+
+                    } while (!res || percentage < 1 || percentage > 100);
+
+                    tipAmount = netTotal * percentage / 100;
+
+                    Console.WriteLine("\nTip was added successfully.\n");
+                    break;
+
+                case 2:
+                    Console.Write("Enter tip amount: ");
+                    do
+                    {
+                        res = decimal.TryParse(Console.ReadLine(), out tipAmount);
+                        if (!res || tipAmount <= 0)
+                            Console.WriteLine("Incorrect price: more than zero $!");
+                    } while (!res || tipAmount <= 0);
+                    Console.WriteLine("\nTip was added successfully.\n");
+                    break;
+
+                case 3:
+                    tipAmount = 0;
+                    break;
+            }
+
+        }
+
         static void DispalyAllItems()
         {
             Console.WriteLine($"{"\nItemNo",6}  {"Description",-20}  {"Price",10}");
