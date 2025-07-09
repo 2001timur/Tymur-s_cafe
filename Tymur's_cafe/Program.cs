@@ -254,6 +254,44 @@ namespace Tymur_s_cafe
             Console.WriteLine("All items have been cleared.\n");
         }
 
+        static void SaveToFile(string fileName)
+        {
+            List<string> allLines = new();
+
+            for (int i = 0; i < descriptions.Count; i++)
+            {
+                string str = $"{descriptions[i]}/{prices[i]}";
+                allLines.Add(str);
+            }
+
+            File.WriteAllLines(fileName, allLines);
+        }
+
+        static void SaveToFileMenu()
+        {
+            if (descriptions.Count == 0)
+            {
+                Console.WriteLine("There are no items in the bill to save.\n");
+                return;
+            }
+
+            string fileName, fileNameTrim;
+            bool res;
+
+            do
+            {
+                Console.Write("\nEnter the file path to save items to: ");
+                fileName = Console.ReadLine();
+                fileNameTrim = Path.GetFileNameWithoutExtension(fileName);
+                if (string.IsNullOrEmpty(fileName) || fileNameTrim.Length < 1 || fileNameTrim.Length > 10)
+                    Console.WriteLine("Incorrect file name: [1-10] symbols!");
+            } while (string.IsNullOrEmpty(fileName) || fileNameTrim.Length < 1 || fileNameTrim.Length > 10);
+
+            SaveToFile(fileName);
+
+            Console.WriteLine($"Write to file {fileName} was successful.\n");
+        }
+
         static void Main(string[] args)
         {
             
