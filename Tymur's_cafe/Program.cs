@@ -241,6 +241,18 @@ namespace Tymur_s_cafe
         }
 
 
+        static void ClearAllMenu()
+        {
+            if (descriptions.Count == 0)
+            {
+                Console.WriteLine("There are no items in the bill to clear.\n");
+                return;
+            }
+
+            descriptions.Clear();
+            prices.Clear();
+            Console.WriteLine("All items have been cleared.\n");
+        }
 
         static void Main(string[] args)
         {
