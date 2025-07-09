@@ -10,6 +10,10 @@ namespace Tymur_s_cafe
         static List<string> descriptions = new();
         static List<decimal> prices = new();
 
+        static decimal tipAmount;
+        static decimal netTotal;
+        static decimal totalGST;
+        static decimal totalAmount;
         static void Menu()
         {
             Console.WriteLine("╔═════════════════════════════╗");
@@ -71,6 +75,59 @@ namespace Tymur_s_cafe
 
         }
 
+        static void DispalyAllItems()
+        {
+            Console.WriteLine($"{"\nItemNo",6}  {"Description",-20}  {"Price",10}");
+            Console.Write(new string('-', 6));
+            Console.Write("  ");
+            Console.Write(new string('-', 20));
+            Console.Write("  ");
+            Console.Write(new string('-', 10));
+            Console.Write('\n');
+
+            for (int i = 0; i < descriptions.Count; i++)
+            {
+                Console.WriteLine($"{i + 1,6}  {descriptions[i],-20}  {"$" + prices[i].ToString("f2"),10}");
+            }
+
+        }
+
+        static void RemoveItemMenu()
+        {
+            if (descriptions.Count == 0)
+            {
+                Console.WriteLine("There are no items in the bill to remove.\n");
+                return;
+            }
+
+
+            DispalyAllItems();
+            int countItems = descriptions.Count;
+
+            int indexItem;
+            bool res;
+
+            do
+            {
+                Console.Write("\nEnter the item number to remove or 0 to cancel: ");
+                res = int.TryParse(Console.ReadLine(), out indexItem);
+                if (!res || indexItem < 0 || indexItem > countItems)
+                    Console.WriteLine("Incorrect choice. Try again.");
+
+            } while (!res || indexItem < 0 || indexItem > countItems);
+
+            if (indexItem > 0)
+            {
+                descriptions.RemoveAt(indexItem - 1);
+                prices.RemoveAt(indexItem - 1);
+                tipAmount = 0;
+                Console.WriteLine("\nRemove item was successful.\n");
+
+                AddTipMenu();
+            }
+
+
+        }
         static void Main(string[] args)
         {
             
