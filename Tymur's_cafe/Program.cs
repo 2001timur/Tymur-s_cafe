@@ -343,7 +343,50 @@ namespace Tymur_s_cafe
 
         static void Main(string[] args)
         {
-            
+            Menu();
+
+            int choice;
+
+            while (true)
+            {
+                bool res;
+                do
+                {
+                    Console.Write("Enter your choice: ");
+                    res = int.TryParse(Console.ReadLine(), out choice);
+                    if (!res || choice < 0 || choice > 7) Console.WriteLine("Incorrect choice. Try again.\n");
+                } while (!res || choice < 0 || choice > 7);
+
+                switch (choice)
+                {
+                    case 1:
+                        AddItemMenu();
+                        break;
+                    case 2:
+                        RemoveItemMenu();
+                        break;
+                    case 3:
+                        AddTipMenu();
+                        break;
+                    case 4:
+                        DisplayBillMenu();
+                        break;
+                    case 5:
+                        ClearAllMenu();
+                        break;
+                    case 6:
+                        SaveToFileMenu();
+                        break;
+                    case 7:
+                        LoadFromFileMenu();
+                        break;
+                    case 0:
+                        Console.WriteLine("Good-bye and thanks for using this program.");
+                        return;
+
+                }
+
+            }
         }
     }
 }
